@@ -114,8 +114,8 @@ function graphFriends(friends, friendlinks) {
     
     // Set the initial parameters of the force() layout
     var force = d3.layout.force()
-        .charge(-40)
-        .linkDistance(30)
+        .charge(-75)
+        .linkDistance(40)
         .size([width / 1.2, height / 2])
     
     // Add svg and start visualization
