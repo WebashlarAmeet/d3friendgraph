@@ -100,8 +100,8 @@ function graphFriends(friends, friendlinks) {
     document.getElementById('load-status').innerHTML = ''
     
     // Set dimensions of svg
-    var width = 1200,
-        height = 600;
+    var width = 900,
+        height = 500;
     
     // Set up a 10-color scale for node colors
     var color = d3.scale.category10()
