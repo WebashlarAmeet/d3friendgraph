@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="http://d3js.org/d3.v2.js"></script>
+        <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js">
+        </script>
+        <script type="text/javascript" src="friendgraph.js">        
+        </script>
+    </head>
+    <body>
+        <div id="viz">
+        </div>
+        <div id="fb-root">
+            <div id="selected-friend-name"></div>
+            <div id="auth-status">
+                <div id="auth-loggedout">
+                    <a href="#" id="auth-loginlink">Login</a>
+                </div>
+            <div id="auth-loggedin" style="display:none">
+          Logged in as <span id="auth-displayname"></span>  
+        (<a href="#" id="auth-logoutlink">logout</a>)
+            </div>
+            <div id="load-status"></div>
+        </div>
+    </body>
+</html>
