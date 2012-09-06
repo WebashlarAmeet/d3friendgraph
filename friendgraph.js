@@ -46,18 +46,20 @@ function indexWithAttribute(array, attr, value) {
     for(var i=0; i < array.length; i++) {
         if(array[i][attr] === value) {
             return i;
+        } else {
+            return -1;
         }
     }
 }
 
 function showName(d) {
-    // Displays given node's 'name' attribute.
+    // Displays given d3 node's 'name' attribute.
     document.getElementById('selected-friend-name').innerHTML = d['name'];
 }
 
 function getMutualFriends(id, friends, friendlinks) {
     // Retrieves a Facebook API object containing mutual friends
-    // for a given user ID.
+    // for a given user ID. Passes it to the getLinks() function.
     FB.api('/me/mutualfriends/' + id, function (response) {
         getLinks(response, id, friends, friendlinks); }
     );
@@ -65,7 +67,7 @@ function getMutualFriends(id, friends, friendlinks) {
 
 function getLinks(response, id, friends, friendlinks) {
     // Calculates links between mutual friends and pushes them to an array.
-    // Displays percent of friend links completed. 
+    // Displays percent of friend links completed in 'load-status' div. 
     var mutualFriends = response['data'];
     var sourceIndex = indexWithAttribute(friends, 'id', id);
 
@@ -85,7 +87,7 @@ function getLinks(response, id, friends, friendlinks) {
 }
         
 function getFriends(response) {
-    // Loads friends as array. Creates array to hold links between mutual friends.
+    // Loads friend nodes as an array. Creates array to hold links between mutual friends.
     var friends = response['data']
     var friendlinks = []
      
@@ -100,8 +102,8 @@ function graphFriends(friends, friendlinks) {
     document.getElementById('load-status').innerHTML = ''
     
     // Set dimensions of svg
-    var width = 1200,
-        height = 600;
+    var width = window.innerWidth - 100,
+        height = window.innerHeight - 100;
     
     // Set up a 10-color scale for node colors
     var color = d3.scale.category10()
@@ -114,19 +116,21 @@ function graphFriends(friends, friendlinks) {
     
     // Set the initial parameters of the force() layout
     var force = d3.layout.force()
-        .charge(-40)
-        .linkDistance(30)
+        .charge(-75)
+        .linkDistance(40)
         .size([width / 1.2, height / 2])
     
     // Add svg and start visualization
     var svg = d3.select("#viz").append("svg")
         .attr("width", width)
         .attr("height", height);
-        
+    
+    // Pass in friends array as graph nodes and friendlinks
+    // array as graph edges.
     force.nodes(friends)
         .links(friendlinks)
         .start();
-    
+     
     var link = svg.selectAll("line.link")
         .data(friendlinks)
       .enter().append("line")
